@@ -17,5 +17,9 @@ public class Roster {
 	public void RemoveStudent(Student s) {
 		this.studentList.remove(s);
 	}
+	
+	public int RosterLength() {
+		return studentList.size();
+	}
 
 }
