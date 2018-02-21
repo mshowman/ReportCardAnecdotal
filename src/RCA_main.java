@@ -1,10 +1,7 @@
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
 /*
  * RCA_main class
  * 
- * GUI for application
+ * runs MainView application
  * 
  */
 public class RCA_main {
