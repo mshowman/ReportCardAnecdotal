@@ -270,6 +270,7 @@ public class MainView extends JFrame {
 		c.removeAll();
 
 		// creates jlist object to show roster contents
+		// adds dummy items to list for display testing
 		DefaultListModel<String> studentList = new DefaultListModel();
 		studentList.addElement("Matt Showman");
 		studentList.addElement("Nate Lewis");
@@ -310,20 +311,25 @@ public class MainView extends JFrame {
 		studentList.addElement("Matt Showman");
 		studentList.addElement("Nate Lewis");
 		
+		// creates jlist to store roster list
+		// limits selection to one student at a time
 		JList<String> rosterList = new JList<String>(studentList);
 		rosterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rosterList.setLayoutOrientation(JList.VERTICAL);
 		
+		// creates scrollbar for jlist object
 		JScrollPane rosterScroller = new JScrollPane(rosterList);
 		rosterScroller.setPreferredSize(new Dimension(10, 600));
 		rosterScroller.setAlignmentX(RIGHT_ALIGNMENT);
 		rosterScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		rosterScroller.getVerticalScrollBar().setUnitIncrement(10);
 		
+		// creates panel to hold roster list
 		JPanel rosterPanel = new JPanel(new GridLayout(1, 1));
 		rosterPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		rosterPanel.setPreferredSize(new Dimension(200, 600));
 
+		// adds scrollbar (and attached jlist) to panel
 		rosterPanel.add(rosterScroller);
 		
 		// creates panel to hold form fields
