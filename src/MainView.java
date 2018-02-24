@@ -16,7 +16,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 public class MainView extends JFrame {
@@ -271,15 +273,58 @@ public class MainView extends JFrame {
 		DefaultListModel<String> studentList = new DefaultListModel();
 		studentList.addElement("Matt Showman");
 		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
+		studentList.addElement("Matt Showman");
+		studentList.addElement("Nate Lewis");
 		
 		JList<String> rosterList = new JList<String>(studentList);
-		rosterList.setSelectionMode(0);
+		rosterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		rosterList.setLayoutOrientation(JList.VERTICAL);
+		
+		JScrollPane rosterScroller = new JScrollPane(rosterList);
+		rosterScroller.setPreferredSize(new Dimension(10, 600));
+		rosterScroller.setAlignmentX(RIGHT_ALIGNMENT);
+		rosterScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		rosterScroller.getVerticalScrollBar().setUnitIncrement(10);
 		
 		JPanel rosterPanel = new JPanel(new GridLayout(1, 1));
 		rosterPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		rosterPanel.setPreferredSize(new Dimension(200, 600));
 
-		rosterPanel.add(rosterList);
+		rosterPanel.add(rosterScroller);
 		
 		// creates panel to hold form fields
 		JPanel formPanel = new JPanel(new GridLayout(7, 2));
