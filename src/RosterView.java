@@ -20,42 +20,73 @@ import javax.swing.border.EmptyBorder;
 public class RosterView {
 
 	// declares components
-	Container c;
-	JList<String> rosterList;
-	JScrollPane rosterScroller;
-	JButton addStudent;
-	JButton removeStudent;
-	JTextField nameField;
-	JRadioButton genPRadio;
-	JRadioButton genMRadio;
-	JRadioButton genERadio;
-	JRadioButton mathPRadio;
-	JRadioButton mathMRadio;
-	JRadioButton mathERadio;
-	JRadioButton elaPRadio;
-	JRadioButton elaMRadio;
-	JRadioButton elaERadio;
-	JRadioButton sciencePRadio;
-	JRadioButton scienceMRadio;
-	JRadioButton scienceERadio;
-	JRadioButton ssPRadio;
-	JRadioButton ssMRadio;
-	JRadioButton ssERadio;
-	ButtonGroup generalButtons;
-	ButtonGroup mathButtons;
-	ButtonGroup elaButtons;
-	ButtonGroup scienceButtons;
-	ButtonGroup ssButtons;
-	JButton saveButton;
-	JButton cancelButton;
-
+	private Container c;
+	
+	private DefaultListModel<String> studentList;
+	private JList<String> rosterList;
+	private JScrollPane rosterScroller;
+	
+	private JPanel rosterPanel;
+	
+	private JButton addStudent;
+	private AddListener objAddListner;
+	
+	private JButton removeStudent;
+	private JPanel rosterButtons;
+	
+	private JPanel formPanel;
+	
+	private JPanel namePanel;
+	private JLabel nameLabel;
+	private JTextField nameField;
+	
+	private JPanel generalPanel;
+	private JLabel generalLabel;
+	private ButtonGroup generalButtons;
+	private JRadioButton genPRadio;
+	private JRadioButton genMRadio;
+	private JRadioButton genERadio;
+	
+	private JPanel mathPanel;
+	private JLabel mathLabel;
+	private ButtonGroup mathButtons;
+	private JRadioButton mathPRadio;
+	private JRadioButton mathMRadio;
+	private JRadioButton mathERadio;
+	
+	private JPanel elaPanel;
+	private JLabel elaLabel;
+	private ButtonGroup elaButtons;
+	private JRadioButton elaPRadio;
+	private JRadioButton elaMRadio;
+	private JRadioButton elaERadio;
+	
+	private JPanel sciencePanel;
+	private JLabel scienceLabel;
+	private ButtonGroup scienceButtons;
+	private JRadioButton sciencePRadio;
+	private JRadioButton scienceMRadio;
+	private JRadioButton scienceERadio;
+	
+	private JPanel ssPanel;
+	private JLabel ssLabel;
+	private ButtonGroup ssButtons;
+	private JRadioButton ssPRadio;
+	private JRadioButton ssMRadio;
+	private JRadioButton ssERadio;
+	
+	private JPanel buttonPanel;
+	private JButton saveButton;
+	private JButton cancelButton;
+	private CancelListener objCancelListener;
+	
 	// constructor takes Container and sets it to Roster View
 	public RosterView(Container c) {
 		// sets object's container to container that was passed
 		this.c = c;
 
 		// creates jlist object to show roster contents
-		DefaultListModel<String> studentList = new DefaultListModel<String>();
+		studentList = new DefaultListModel<String>();
 
 		// adds dummy items to list for display testing
 		for (int i = 0; i < 11; i++) {
@@ -78,20 +109,20 @@ public class RosterView {
 		rosterScroller.getVerticalScrollBar().setUnitIncrement(10);
 
 		// creates panel to hold roster list
-		JPanel rosterPanel = new JPanel(new BorderLayout());
+		rosterPanel = new JPanel(new BorderLayout());
 		rosterPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
 
 		// creates add and delete buttons
 		// sets Action Listeners for buttons
 		addStudent = new JButton("+");
-		AddListener objAddListner = new AddListener();
+		objAddListner = new AddListener();
 		addStudent.addActionListener(objAddListner);
 
 		removeStudent = new JButton("-");
 		removeStudent.setEnabled(false);
 
 		// creates panel to hold add and remove buttons
-		JPanel rosterButtons = new JPanel();
+		rosterButtons = new JPanel();
 		rosterButtons.add(addStudent);
 		rosterButtons.add(removeStudent);
 
@@ -100,14 +131,14 @@ public class RosterView {
 		rosterPanel.add(rosterButtons, BorderLayout.PAGE_END);
 
 		// creates panel to hold form fields
-		JPanel formPanel = new JPanel(new GridLayout(7, 2));
+		formPanel = new JPanel(new GridLayout(7, 2));
 
 		// creates panel to hold label and textfield for name
-		JPanel namePanel = new JPanel(new BorderLayout());
+		namePanel = new JPanel(new BorderLayout());
 		namePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and textfield for name
-		JLabel nameLabel = new JLabel("Student Name:");
+		nameLabel = new JLabel("Student Name:");
 		nameField = new JTextField();
 
 		// add items to panel
@@ -118,11 +149,11 @@ public class RosterView {
 		formPanel.add(namePanel);
 
 		// creates panel to hold label and radio buttons for general grade
-		JPanel generalPanel = new JPanel(new GridLayout(1, 4));
+		generalPanel = new JPanel(new GridLayout(1, 4));
 		generalPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and radio buttons
-		JLabel generalLabel = new JLabel("General Grade:");
+		generalLabel = new JLabel("General Grade:");
 		genPRadio = new JRadioButton("P");
 		genMRadio = new JRadioButton("M");
 		genERadio = new JRadioButton("E");
@@ -143,11 +174,11 @@ public class RosterView {
 		formPanel.add(generalPanel);
 
 		// creates panel to hold label and radio buttons for math grade
-		JPanel mathPanel = new JPanel(new GridLayout(1, 4));
+		mathPanel = new JPanel(new GridLayout(1, 4));
 		mathPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and radio buttons
-		JLabel mathLabel = new JLabel("Math Grade:");
+		mathLabel = new JLabel("Math Grade:");
 		mathPRadio = new JRadioButton("P");
 		mathMRadio = new JRadioButton("M");
 		mathERadio = new JRadioButton("E");
@@ -168,11 +199,11 @@ public class RosterView {
 		formPanel.add(mathPanel);
 
 		// creates panel to hold label and radio buttons for ELA grade
-		JPanel elaPanel = new JPanel(new GridLayout(1, 4));
+		elaPanel = new JPanel(new GridLayout(1, 4));
 		elaPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and radio buttons
-		JLabel elaLabel = new JLabel("ELA Grade:");
+		elaLabel = new JLabel("ELA Grade:");
 		elaPRadio = new JRadioButton("P");
 		elaMRadio = new JRadioButton("M");
 		elaERadio = new JRadioButton("E");
@@ -193,11 +224,11 @@ public class RosterView {
 		formPanel.add(elaPanel);
 
 		// creates panel to hold label and radio buttons for science grade
-		JPanel sciencePanel = new JPanel(new GridLayout(1, 4));
+		sciencePanel = new JPanel(new GridLayout(1, 4));
 		sciencePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and radio buttons
-		JLabel scienceLabel = new JLabel("Science Grade:");
+		scienceLabel = new JLabel("Science Grade:");
 		sciencePRadio = new JRadioButton("P");
 		scienceMRadio = new JRadioButton("M");
 		scienceERadio = new JRadioButton("E");
@@ -218,11 +249,11 @@ public class RosterView {
 		formPanel.add(sciencePanel);
 
 		// creates panel to hold label and radio buttons for social studies grade
-		JPanel ssPanel = new JPanel(new GridLayout(1, 4));
+		ssPanel = new JPanel(new GridLayout(1, 4));
 		ssPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and radio buttons
-		JLabel ssLabel = new JLabel("Social Studies Grade:");
+		ssLabel = new JLabel("Social Studies Grade:");
 		ssPRadio = new JRadioButton("P");
 		ssMRadio = new JRadioButton("M");
 		ssERadio = new JRadioButton("E");
@@ -243,7 +274,7 @@ public class RosterView {
 		formPanel.add(ssPanel);
 
 		// creates panel for buttons
-		JPanel buttonPanel = new JPanel();
+		buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates buttons for save and cancel
@@ -251,7 +282,7 @@ public class RosterView {
 		saveButton = new JButton("Save Student");
 
 		cancelButton = new JButton("Cancel");
-		CancelListener objCancelListener = new CancelListener();
+		objCancelListener = new CancelListener();
 		cancelButton.addActionListener(objCancelListener);
 
 		// add buttons to panel

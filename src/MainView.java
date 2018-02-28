@@ -8,7 +8,15 @@ import javax.swing.JMenuItem;
 
 public class MainView extends JFrame {
 	// declare variables
-	Container c;
+	private Container c;
+	private JMenuBar navBar;
+	private JMenuItem rosterMenu;
+	private RosterMenuListener objRosterMenuListener;
+	private JMenuItem subjectMenu;
+	private RosterMenuListener objSubjectMenuListener;
+	private JMenuItem reportMenu;
+	private RosterMenuListener objReportMenuListener;
+	private RosterView rv;
 
 	// default constructor
 	// sets up frame and container
@@ -19,27 +27,27 @@ public class MainView extends JFrame {
 		c = getContentPane();
 
 		// menubar
-		JMenuBar navBar = new JMenuBar();
+		navBar = new JMenuBar();
 
 		// roster menu item
-		JMenuItem rosterMenu = new JMenuItem("Roster");
-		RosterMenuListener objRosterMenuListener = new RosterMenuListener();
+		rosterMenu = new JMenuItem("Roster");
+		objRosterMenuListener = new RosterMenuListener();
 		rosterMenu.addActionListener(objRosterMenuListener);
 		navBar.add(rosterMenu);
 
 		// subject menu item
-		JMenuItem subjectMenu = new JMenuItem("Edit Anecdotal for Subject");
+		subjectMenu = new JMenuItem("Edit Anecdotal for Subject");
 		navBar.add(subjectMenu);
 
 		// report menu item
-		JMenuItem reportMenu = new JMenuItem("Run Report");
+		reportMenu = new JMenuItem("Run Report");
 		navBar.add(reportMenu);
 
 		// sets menubar of frame to navbar
 		setJMenuBar(navBar);
 		
 		// sets container to roster view by default
-		RosterView rv = new RosterView(c);
+		rv = new RosterView(c);
 		c = rv.getRosterContainer();
 
 		// set attributes of frame
@@ -56,7 +64,7 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			RosterView rv = new RosterView(c);
+			rv = new RosterView(c);
 			c = rv.getRosterContainer();
 			
 			c.validate();
