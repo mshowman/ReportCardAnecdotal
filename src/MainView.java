@@ -13,8 +13,10 @@ public class MainView extends JFrame {
 	private JMenuItem rosterMenu;
 	private RosterMenuListener objRosterMenuListener;
 	private JMenuItem reportMenu;
-	private RosterMenuListener objReportMenuListener;
-	private RosterView rv;
+	private RosterMenuListener objRMenuListener;
+	private ReportMenuListener objReportMenuListener;
+	private RosterView rosterView;
+	private ReportView reportView;
 
 	// default constructor
 	// sets up frame and container
@@ -35,14 +37,16 @@ public class MainView extends JFrame {
 
 		// report menu item
 		reportMenu = new JMenuItem("Run Report");
+		objReportMenuListener = new ReportMenuListener();
+		reportMenu.addActionListener(objReportMenuListener);
 		navBar.add(reportMenu);
 
 		// sets menubar of frame to navbar
 		setJMenuBar(navBar);
 		
 		// sets container to roster view by default
-		rv = new RosterView(c);
-		c = rv.getRosterContainer();
+		rosterView = new RosterView(c);
+		c = rosterView.getRosterContainer();
 
 		// set attributes of frame
 		setTitle("Report Card Anecdotals");
@@ -58,8 +62,8 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			rv = new RosterView(c);
-			c = rv.getRosterContainer();
+			rosterView = new RosterView(c);
+			c = rosterView.getRosterContainer();
 			
 			c.validate();
 			c.repaint();
@@ -70,8 +74,11 @@ public class MainView extends JFrame {
 	private class ReportMenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("This should show the Report View.");
-
+			reportView = new ReportView(c);
+			c = reportView.getReportContainer();
+			
+			c.validate();
+			c.repaint();
 		}
 	}
 }
