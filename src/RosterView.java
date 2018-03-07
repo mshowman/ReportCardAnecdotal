@@ -84,6 +84,7 @@ public class RosterView {
 	public RosterView(Container c) {
 		// sets object's container to container that was passed
 		this.c = c;
+		this.c.removeAll();
 
 		// creates jlist object to show roster contents
 		studentList = new DefaultListModel<String>();
