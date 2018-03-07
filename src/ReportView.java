@@ -46,6 +46,7 @@ public class ReportView {
 	public ReportView(Container c) {
 		// sets object's container to container that was passed
 		this.c = c;
+		this.c.removeAll();
 
 		// creates jlist object to show unpicked students
 		notPicked = new DefaultListModel<String>();
@@ -62,7 +63,7 @@ public class ReportView {
 
 		// creates scrollbar for jlist object
 		notPickedScroller = new JScrollPane(notPickedList);
-		notPickedScroller.setPreferredSize(new Dimension(200, 400));
+		notPickedScroller.setPreferredSize(new Dimension(200, 300));
 		notPickedScroller.setAlignmentX(JScrollPane.RIGHT_ALIGNMENT);
 		notPickedScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		notPickedScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -77,8 +78,8 @@ public class ReportView {
 		isPickedList.setLayoutOrientation(JList.VERTICAL);
 
 		// creates scrollbar for jlist object
-		isPickedScroller = new JScrollPane(notPickedList);
-		isPickedScroller.setPreferredSize(new Dimension(200, 400));
+		isPickedScroller = new JScrollPane(isPickedList);
+		isPickedScroller.setPreferredSize(new Dimension(200, 300));
 		isPickedScroller.setAlignmentX(JScrollPane.RIGHT_ALIGNMENT);
 		isPickedScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		isPickedScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -86,7 +87,7 @@ public class ReportView {
 
 		// creates panel to hold unpicked and picked student lists
 		studentPanel = new JPanel(new BorderLayout());
-		studentPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
+		studentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// creates add and delete buttons
 		// sets Action Listeners for buttons
@@ -104,9 +105,9 @@ public class ReportView {
 		studentButtons.add(removeStudent);
 
 		// adds buttons, scrollbar (and attached jlist) to panel
-		studentPanel.add(notPickedScroller, BorderLayout.PAGE_START);
+		studentPanel.add(notPickedScroller, BorderLayout.LINE_START);
 		studentPanel.add(studentButtons, BorderLayout.CENTER);
-		studentPanel.add(isPickedScroller, BorderLayout.PAGE_END);
+		studentPanel.add(isPickedScroller, BorderLayout.LINE_END);
 
 		// adds checkboxes
 		allSubject = new JCheckBox("All Subjects");
@@ -119,7 +120,7 @@ public class ReportView {
 		//create panel and add checkboxes to it
 		subjectPanel = new JPanel(new BorderLayout());
 		
-		checkboxPanel = new JPanel();
+		checkboxPanel = new JPanel(new GridLayout(6, 1));
 		checkboxPanel.add(allSubject);
 		checkboxPanel.add(generalSubject);
 		checkboxPanel.add(mathSubject);
@@ -145,12 +146,12 @@ public class ReportView {
 		buttonPanel.add(runReportButton);
 		buttonPanel.add(cancelButton);
 
-		// add panel to formPanel
+		// add panel to subjectPanel
 		subjectPanel.add(buttonPanel, BorderLayout.PAGE_END);
 
 		// add rosterPanel and formPanel to layout panel
-		this.c.add(studentPanel, BorderLayout.LINE_START);
-		this.c.add(subjectPanel, BorderLayout.CENTER);
+		this.c.add(studentPanel, BorderLayout.CENTER);
+		this.c.add(subjectPanel, BorderLayout.LINE_END);
 
 		// redraws screen
 		this.c.validate();
