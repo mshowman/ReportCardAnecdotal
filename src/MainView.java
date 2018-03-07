@@ -12,8 +12,6 @@ public class MainView extends JFrame {
 	private JMenuBar navBar;
 	private JMenuItem rosterMenu;
 	private RosterMenuListener objRosterMenuListener;
-	private JMenuItem subjectMenu;
-	private RosterMenuListener objSubjectMenuListener;
 	private JMenuItem reportMenu;
 	private RosterMenuListener objReportMenuListener;
 	private RosterView rv;
@@ -34,10 +32,6 @@ public class MainView extends JFrame {
 		objRosterMenuListener = new RosterMenuListener();
 		rosterMenu.addActionListener(objRosterMenuListener);
 		navBar.add(rosterMenu);
-
-		// subject menu item
-		subjectMenu = new JMenuItem("Edit Anecdotal for Subject");
-		navBar.add(subjectMenu);
 
 		// report menu item
 		reportMenu = new JMenuItem("Run Report");
@@ -69,14 +63,6 @@ public class MainView extends JFrame {
 			
 			c.validate();
 			c.repaint();
-		}
-	}
-
-	// listens for Edit Subject Anecdotal menuitem to be clicked
-	private class SubjectMenuListener implements ActionListener {
-
-		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("This should show the Subject View.");
 		}
 	}
 
