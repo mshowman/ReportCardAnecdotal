@@ -21,65 +21,67 @@ public class RosterView {
 
 	// declares components
 	private Container c;
-	
+
 	private DefaultListModel<String> studentList;
 	private JList<String> rosterList;
 	private JScrollPane rosterScroller;
-	
+
 	private JPanel rosterPanel;
-	
+
 	private JButton addStudent;
 	private AddListener objAddListner;
-	
+
 	private JButton removeStudent;
 	private JPanel rosterButtons;
-	
+
 	private JPanel formPanel;
-	
+
 	private JPanel namePanel;
-	private JLabel nameLabel;
-	private JTextField nameField;
-	
+	private JLabel firstNameLabel;
+	private JTextField firstNameField;
+	private JLabel lastNameLabel;
+	private JTextField lastNameField;
+
 	private JPanel generalPanel;
 	private JLabel generalLabel;
 	private ButtonGroup generalButtons;
 	private JRadioButton genPRadio;
 	private JRadioButton genMRadio;
 	private JRadioButton genERadio;
-	
+
 	private JPanel mathPanel;
 	private JLabel mathLabel;
 	private ButtonGroup mathButtons;
 	private JRadioButton mathPRadio;
 	private JRadioButton mathMRadio;
 	private JRadioButton mathERadio;
-	
+
 	private JPanel elaPanel;
 	private JLabel elaLabel;
 	private ButtonGroup elaButtons;
 	private JRadioButton elaPRadio;
 	private JRadioButton elaMRadio;
 	private JRadioButton elaERadio;
-	
+
 	private JPanel sciencePanel;
 	private JLabel scienceLabel;
 	private ButtonGroup scienceButtons;
 	private JRadioButton sciencePRadio;
 	private JRadioButton scienceMRadio;
 	private JRadioButton scienceERadio;
-	
+
 	private JPanel ssPanel;
 	private JLabel ssLabel;
 	private ButtonGroup ssButtons;
 	private JRadioButton ssPRadio;
 	private JRadioButton ssMRadio;
 	private JRadioButton ssERadio;
-	
+
 	private JPanel buttonPanel;
 	private JButton saveButton;
 	private JButton cancelButton;
 	private CancelListener objCancelListener;
-	
+
 	// constructor takes Container and sets it to Roster View
 	public RosterView(Container c) {
 		// sets object's container to container that was passed
@@ -135,16 +137,21 @@ public class RosterView {
 		formPanel = new JPanel(new GridLayout(7, 2));
 
 		// creates panel to hold label and textfield for name
-		namePanel = new JPanel(new BorderLayout());
+		namePanel = new JPanel(new GridLayout(2, 2));
 		namePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
 		// creates label and textfield for name
-		nameLabel = new JLabel("Student Name:");
-		nameField = new JTextField();
+		firstNameLabel = new JLabel("Student's First Name:");
+		firstNameField = new JTextField();
+
+		lastNameLabel = new JLabel("Student's Last Name:");
+		lastNameField = new JTextField();
 
 		// add items to panel
-		namePanel.add(nameLabel, BorderLayout.LINE_START);
-		namePanel.add(nameField, BorderLayout.CENTER);
+		namePanel.add(firstNameLabel);
+		namePanel.add(firstNameField);
+		namePanel.add(lastNameLabel);
+		namePanel.add(lastNameLabel);
 
 		// add panel to formPanel
 		formPanel.add(namePanel);
