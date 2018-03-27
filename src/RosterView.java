@@ -320,7 +320,8 @@ public class RosterView {
 	// enables or disables form fields
 	public void toggleFormEnabled(boolean enabled) {
 
-		nameField.setEnabled(enabled);
+		firstNameField.setEnabled(enabled);
+		lastNameField.setEnabled(enabled);
 
 		genPRadio.setEnabled(enabled);
 		genMRadio.setEnabled(enabled);
@@ -342,7 +343,7 @@ public class RosterView {
 		cancelButton.setEnabled(enabled);
 
 		if (enabled == true)
-			nameField.requestFocusInWindow();
+			firstNameField.requestFocusInWindow();
 
 		rosterList.setEnabled(!enabled);
 		addStudent.setEnabled(!enabled);
@@ -350,7 +351,8 @@ public class RosterView {
 
 	// clears the form fields and rosterlist's selection
 	public void clearComponents() {
-		nameField.setText("");
+		firstNameField.setText("");
+		lastNameField.setText("");
 		generalButtons.clearSelection();
 		mathButtons.clearSelection();
 		elaButtons.clearSelection();
