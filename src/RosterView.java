@@ -151,7 +151,7 @@ public class RosterView {
 		namePanel.add(firstNameLabel);
 		namePanel.add(firstNameField);
 		namePanel.add(lastNameLabel);
-		namePanel.add(lastNameLabel);
+		namePanel.add(lastNameField);
 
 		// add panel to formPanel
 		formPanel.add(namePanel);
