@@ -11,7 +11,7 @@ public class Student {
 		//Variables
 		private String firstName,lastName,fullName;
 		private char gender;
-		private char[] grades;	
+		private char[] grades = new char[5];	
 		private int age;
 			
 		public Student() {
@@ -20,7 +20,11 @@ public class Student {
 			fullName = "";
 			gender = 0;
 			age = 0;
-			grades = new char[5];
+		}
+		
+		public Student(String firstName, String lastName, char gender, char[] grades, int age) {
+			setinfo(firstName, lastName, gender, age);
+			setGrades(grades);
 		}
 		
 		//Get Methods
@@ -51,12 +55,10 @@ public class Student {
 			this.age = age;
 			this.fullName = fName + "" + lName;
 		}
-		public void setGrades(char general, char math, char ela, char science, char ss  ){
-			grades[0] = general;
-			grades[1] = math;
-			grades[2] = ela;
-			grades[3] = science;
-			grades[4] = ss;	
+		public void setGrades(char[] grades){
+			for (int i = 0; i < grades.length; i++) {
+				this.grades[i] = grades[i];
+			}
 		}
 		
 }

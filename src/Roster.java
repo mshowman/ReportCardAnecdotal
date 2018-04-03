@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Vector;
 
 /*
  * Roster Class
  * 
- * Stores the list of Student objects in a vector
+ * Stores the list of Student objects in a ArrayList
  * Allows for adding/editing/deleting of students
  * 
  */
@@ -19,7 +18,7 @@ public class Roster {
 		studentList = new ArrayList<Student>();
 	}
 	
-	// constructor if array of student objects is passed, adds each element to vector
+	// constructor if array of student objects is passed, adds each element to ArrayList
 	public Roster(Student[] list) {
 		studentList = new ArrayList<Student>();
 		
@@ -28,22 +27,22 @@ public class Roster {
 		}
 	}
 
-	// adds passed Student object to vector
+	// adds passed Student object to ArrayList
 	public void AddStudent(Student s) {
 		studentList.add(s);
 	}
 	
-	// removes old Student from vector, adds new Student to vector
+	// removes old Student from ArrayList, adds new Student to ArrayList
 	public void EditStudent(Student oldInfo, Student newInfo) {
 		studentList.set(studentList.indexOf(oldInfo), newInfo);
 	}
 	
-	// removes Student from vector
+	// removes Student from ArrayList
 	public void RemoveStudent(Student s) {
 		studentList.remove(s);
 	}
 	
-	// returns length of vector
+	// returns length of ArrayList
 	public int RosterLength() {
 		return studentList.size();
 	}

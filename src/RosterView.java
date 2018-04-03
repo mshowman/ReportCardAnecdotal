@@ -41,6 +41,13 @@ public class RosterView {
 	private JTextField firstNameField;
 	private JLabel lastNameLabel;
 	private JTextField lastNameField;
+	private JPanel basicInfoPanel;
+	private JLabel genderLabel;
+	private ButtonGroup genderButtons;
+	private JRadioButton maleRadio;
+	private JRadioButton femaleRadio;
+	private JLabel ageLabel;
+	private JTextField ageField;
 
 	private JPanel generalPanel;
 	private JLabel generalLabel;
