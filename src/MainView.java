@@ -26,7 +26,7 @@ public class MainView extends JFrame {
 
 		// sets roster to created roster
 		this.r = r;
-		
+
 		// sets container to contentpane
 		c = getContentPane();
 
@@ -47,9 +47,9 @@ public class MainView extends JFrame {
 
 		// sets menubar of frame to navbar
 		setJMenuBar(navBar);
-		
+
 		// sets container to roster view by default
-		rosterView = new RosterView(c,r);
+		rosterView = new RosterView(c, r);
 		c = rosterView.getRosterContainer();
 
 		// set attributes of frame
@@ -66,9 +66,9 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			rosterView = new RosterView(c,r);
+			rosterView = new RosterView(c, r);
 			c = rosterView.getRosterContainer();
-			
+
 			c.validate();
 			c.repaint();
 		}
@@ -80,7 +80,7 @@ public class MainView extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			reportView = new ReportView(c);
 			c = reportView.getReportContainer();
-			
+
 			c.validate();
 			c.repaint();
 		}

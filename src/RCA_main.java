@@ -7,17 +7,14 @@
 public class RCA_main {
 
 	private static MainView mv;
-	
+
 	public static void main(String[] args) {
 		Roster roster = new Roster();
-		
-		char[] grades = {'M','M','M','M','M'};
-		
-		for (int i = 0; i < 11; i++) {
-			roster.addStudent(new Student("Matt", "Showman", 'M', grades, 32));
-			roster.addStudent(new Student("Nate", "Lewis", 'M', grades, 32));
-		}
-		
+
+		char[] grades = { 'M', 'P', 'M', 'E', 'M' };
+
+		roster.addStudent(new Student("Matt", "Showman", 'M', grades));
+
 		mv = new MainView(roster);
 	}
 }

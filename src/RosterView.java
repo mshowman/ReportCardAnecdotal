@@ -1,21 +1,17 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 public class RosterView {
@@ -26,12 +22,7 @@ public class RosterView {
 
 	private JPanel rosterPanel;
 	private JComboBox<String> rosterCombo;
-	
-	private JButton addStudent;
-	private AddListener objAddListner;
-
-	private JButton removeStudent;
-	private JPanel rosterButtons;
+	private AddEditStudentListener objAddEditListner;
 
 	private JPanel formPanel;
 
@@ -40,14 +31,12 @@ public class RosterView {
 	private JTextField firstNameField;
 	private JLabel lastNameLabel;
 	private JTextField lastNameField;
-	
+
 	private JPanel basicInfoPanel;
 	private JLabel genderLabel;
 	private ButtonGroup genderButtons;
 	private JRadioButton maleRadio;
 	private JRadioButton femaleRadio;
-	private JLabel ageLabel;
-	private JTextField ageField;
 
 	private JPanel generalPanel;
 	private JLabel generalLabel;
@@ -88,13 +77,15 @@ public class RosterView {
 	private JButton saveButton;
 	private JButton cancelButton;
 	private CancelListener objCancelListener;
+	private JButton deleteButton;
+	private RemoveListener objRemoveListener;
 
 	// constructor takes Container and sets it to Roster View
 	public RosterView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
 		this.c.removeAll();
-		
+
 		// sets object's roster to roster that was passed
 		this.r = r;
 
@@ -103,31 +94,22 @@ public class RosterView {
 		rosterPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
 
 		// creates dropdown for roster list
-		rosterCombo = new JComboBox(r.nameList());
-		
+		rosterCombo = new JComboBox<String>(r.nameList());
+		objAddEditListner = new AddEditStudentListener();
+		rosterCombo.addActionListener(objAddEditListner);
+
 		// add combobox to panel
 		rosterPanel.add(rosterCombo);
-		
-		// creates add and delete buttons
-		// sets Action Listeners for buttons
-		addStudent = new JButton("+");
-		objAddListner = new AddListener();
-		addStudent.addActionListener(objAddListner);
-
-		removeStudent = new JButton("-");
-		removeStudent.setEnabled(false);
-
-		// creates panel to hold add and remove buttons
-		rosterButtons = new JPanel();
-		rosterButtons.add(addStudent);
-		rosterButtons.add(removeStudent);
 
 		// creates panel to hold form fields
-		formPanel = new JPanel(new GridLayout(7, 2));
+		formPanel = new JPanel(new GridLayout(9, 2));
 
 		// creates panel to hold label and textfield for name
-		namePanel = new JPanel(new GridLayout(2, 2));
-		namePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		GridLayout layout = new GridLayout(2, 2);
+		layout.setVgap(10);
+
+		namePanel = new JPanel(layout);
+		namePanel.setBorder(new EmptyBorder(0, 20, 0, 20));
 
 		// creates label and textfield for name
 		firstNameLabel = new JLabel("Student's First Name:");
@@ -145,9 +127,31 @@ public class RosterView {
 		// add panel to formPanel
 		formPanel.add(namePanel);
 
+		// creates panel to hold gender
+		basicInfoPanel = new JPanel(new GridLayout(1, 3));
+		basicInfoPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
+
+		// creates gender label and radio buttons
+		genderLabel = new JLabel("Gender:");
+		genderButtons = new ButtonGroup();
+		maleRadio = new JRadioButton("Male");
+		femaleRadio = new JRadioButton("Female");
+
+		// add radiobuttons to buttongroup
+		genderButtons.add(maleRadio);
+		genderButtons.add(femaleRadio);
+
+		// add gender to panel
+		basicInfoPanel.add(genderLabel);
+		basicInfoPanel.add(maleRadio);
+		basicInfoPanel.add(femaleRadio);
+
+		// add basicinfopanel to panel
+		formPanel.add(basicInfoPanel);
+
 		// creates panel to hold label and radio buttons for general grade
 		generalPanel = new JPanel(new GridLayout(1, 4));
-		generalPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		generalPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
 		// creates label and radio buttons
 		generalLabel = new JLabel("General Grade:");
@@ -172,7 +176,7 @@ public class RosterView {
 
 		// creates panel to hold label and radio buttons for math grade
 		mathPanel = new JPanel(new GridLayout(1, 4));
-		mathPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		mathPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
 		// creates label and radio buttons
 		mathLabel = new JLabel("Math Grade:");
@@ -197,7 +201,7 @@ public class RosterView {
 
 		// creates panel to hold label and radio buttons for ELA grade
 		elaPanel = new JPanel(new GridLayout(1, 4));
-		elaPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		elaPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
 		// creates label and radio buttons
 		elaLabel = new JLabel("ELA Grade:");
@@ -222,7 +226,7 @@ public class RosterView {
 
 		// creates panel to hold label and radio buttons for science grade
 		sciencePanel = new JPanel(new GridLayout(1, 4));
-		sciencePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		sciencePanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
 		// creates label and radio buttons
 		scienceLabel = new JLabel("Science Grade:");
@@ -247,7 +251,7 @@ public class RosterView {
 
 		// creates panel to hold label and radio buttons for social studies grade
 		ssPanel = new JPanel(new GridLayout(1, 4));
-		ssPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		ssPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
 		// creates label and radio buttons
 		ssLabel = new JLabel("Social Studies Grade:");
@@ -272,9 +276,9 @@ public class RosterView {
 
 		// creates panel for buttons
 		buttonPanel = new JPanel();
-		buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		buttonPanel.setBorder(new EmptyBorder(10, 20, 20, 10));
 
-		// creates buttons for save and cancel
+		// creates buttons for save, cancel, and delete
 		// sets Action Listener for buttons
 		saveButton = new JButton("Save Student");
 
@@ -282,19 +286,25 @@ public class RosterView {
 		objCancelListener = new CancelListener();
 		cancelButton.addActionListener(objCancelListener);
 
+		deleteButton = new JButton("Remove Student");
+		objRemoveListener = new RemoveListener();
+		deleteButton.addActionListener(objRemoveListener);
+
 		// add buttons to panel
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
+		buttonPanel.add(deleteButton);
 
-		// add panel to formPanel
-		formPanel.add(buttonPanel);
+		// hide delete button
+		deleteButton.setVisible(false);
 
 		// disable formPanel
 		toggleFormEnabled(false);
 
 		// add rosterPanel and formPanel to layout panel
-		this.c.add(rosterPanel, BorderLayout.LINE_START);
+		this.c.add(rosterPanel, BorderLayout.PAGE_START);
 		this.c.add(formPanel, BorderLayout.CENTER);
+		this.c.add(buttonPanel, BorderLayout.PAGE_END);
 
 		// redraws screen
 		this.c.validate();
@@ -309,8 +319,20 @@ public class RosterView {
 	// enables or disables form fields
 	public void toggleFormEnabled(boolean enabled) {
 
+		// set defaults for buttons
+		genMRadio.setSelected(true);
+		mathMRadio.setSelected(true);
+		elaMRadio.setSelected(true);
+		scienceMRadio.setSelected(true);
+		ssMRadio.setSelected(true);
+
+		rosterCombo.setEnabled(!enabled);
+
 		firstNameField.setEnabled(enabled);
 		lastNameField.setEnabled(enabled);
+
+		maleRadio.setEnabled(enabled);
+		femaleRadio.setEnabled(enabled);
 
 		genPRadio.setEnabled(enabled);
 		genMRadio.setEnabled(enabled);
@@ -334,25 +356,123 @@ public class RosterView {
 		if (enabled == true)
 			firstNameField.requestFocusInWindow();
 
-		addStudent.setEnabled(!enabled);
 	}
 
 	// clears the form fields and rosterlist's selection
 	public void clearComponents() {
 		firstNameField.setText("");
 		lastNameField.setText("");
+		genderButtons.clearSelection();
 		generalButtons.clearSelection();
 		mathButtons.clearSelection();
 		elaButtons.clearSelection();
 		scienceButtons.clearSelection();
 		ssButtons.clearSelection();
+		rosterCombo.setSelectedIndex(0);
+		saveButton.setText("Save Student");
+		deleteButton.setVisible(false);
+	}
+
+	public void setComponents(Student s) {
+		firstNameField.setText(s.getFirstName());
+		lastNameField.setText(s.getLastName());
+
+		switch (s.getGender()) {
+		case 'M':
+			maleRadio.setSelected(true);
+			break;
+
+		default:
+			femaleRadio.setSelected(true);
+			break;
+		}
+
+		char[] grades = s.getGrades();
+
+		switch (grades[0]) {
+		case 'P':
+			genPRadio.setSelected(true);
+			break;
+
+		case 'M':
+			genMRadio.setSelected(true);
+			break;
+
+		default:
+			genERadio.setSelected(true);
+			break;
+		}
+
+		switch (grades[1]) {
+		case 'P':
+			mathPRadio.setSelected(true);
+			break;
+
+		case 'M':
+			mathMRadio.setSelected(true);
+			break;
+
+		default:
+			mathERadio.setSelected(true);
+			break;
+		}
+
+		switch (grades[2]) {
+		case 'P':
+			elaPRadio.setSelected(true);
+			break;
+
+		case 'M':
+			elaMRadio.setSelected(true);
+			break;
+
+		default:
+			elaERadio.setSelected(true);
+			break;
+		}
+
+		switch (grades[3]) {
+		case 'P':
+			sciencePRadio.setSelected(true);
+			break;
+
+		case 'M':
+			scienceMRadio.setSelected(true);
+			break;
+
+		default:
+			scienceERadio.setSelected(true);
+			break;
+		}
+
+		switch (grades[4]) {
+		case 'P':
+			ssPRadio.setSelected(true);
+			break;
+
+		case 'M':
+			ssMRadio.setSelected(true);
+			break;
+
+		default:
+			ssERadio.setSelected(true);
+			break;
+		}
+
+		saveButton.setText("Update Student");
+		deleteButton.setVisible(true);
+
 	}
 
 	// calls toggleFormEnabled, passing true to enable form fields
-	private class AddListener implements ActionListener {
+	private class AddEditStudentListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
 			toggleFormEnabled(true);
+
+			if (rosterCombo.getSelectedIndex() != 0) {
+				setComponents(r.getStudent(rosterCombo.getSelectedIndex()));
+			}
 		}
 
 	}
@@ -364,7 +484,35 @@ public class RosterView {
 		public void actionPerformed(ActionEvent arg0) {
 			clearComponents();
 			toggleFormEnabled(false);
+		}
+	}
 
+	// removes student if yes is chosen
+	private class RemoveListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			int dialogButton = JOptionPane.YES_NO_OPTION;
+
+			int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure that you want to remove this student?",
+					"Removing Student", dialogButton);
+
+			if (dialogResult == 0) {
+				
+				System.out.println(r.getStudent(rosterCombo.getSelectedIndex()).getFullName());
+
+				r.removeStudent(r.getStudent(rosterCombo.getSelectedIndex()));
+
+				rosterCombo.removeAllItems();
+
+				String[] names = r.nameList();
+
+				for (String string : names) {
+					rosterCombo.addItem(string);
+				}
+
+				clearComponents();
+				toggleFormEnabled(false);
+			}
 		}
 	}
 }

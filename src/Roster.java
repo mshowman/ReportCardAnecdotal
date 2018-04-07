@@ -9,19 +9,20 @@ import java.util.ArrayList;
  */
 
 public class Roster {
-	
+
 	// declaration of variables
 	private ArrayList<Student> studentList;
-	
+
 	// constructor if no params given, do nothing
 	public Roster() {
 		studentList = new ArrayList<Student>();
 	}
-	
-	// constructor if array of student objects is passed, adds each element to ArrayList
+
+	// constructor if array of student objects is passed, adds each element to
+	// ArrayList
 	public Roster(Student[] list) {
 		studentList = new ArrayList<Student>();
-		
+
 		for (Student s : list) {
 			studentList.add(s);
 		}
@@ -31,32 +32,37 @@ public class Roster {
 	public void addStudent(Student s) {
 		studentList.add(s);
 	}
-	
+
 	// removes old Student from ArrayList, adds new Student to ArrayList
 	public void editStudent(Student oldInfo, Student newInfo) {
 		studentList.set(studentList.indexOf(oldInfo), newInfo);
 	}
-	
+
 	// removes Student from ArrayList
 	public void removeStudent(Student s) {
 		studentList.remove(s);
 	}
-	
+
 	// returns length of ArrayList
 	public int rosterLength() {
 		return studentList.size();
 	}
-	
+
+	// return Student at given index
+	public Student getStudent(int index) {
+		return studentList.get(index - 1);
+	}
+
 	// returns String array of student names
 	public String[] nameList() {
-		String[] names = new String[rosterLength()+1];
-		
+		String[] names = new String[rosterLength() + 1];
+
 		names[0] = "Add New Student";
-		
-		for (int i = 1; i < rosterLength(); i++) {
-			names[i] = studentList.get(i).getFullName();
+
+		for (int i = 1; i <= rosterLength(); i++) {
+			names[i] = studentList.get(i - 1).getFullName();
 		}
-		
+
 		return names;
 	}
 
