@@ -28,23 +28,36 @@ public class Roster {
 	}
 
 	// adds passed Student object to ArrayList
-	public void AddStudent(Student s) {
+	public void addStudent(Student s) {
 		studentList.add(s);
 	}
 	
 	// removes old Student from ArrayList, adds new Student to ArrayList
-	public void EditStudent(Student oldInfo, Student newInfo) {
+	public void editStudent(Student oldInfo, Student newInfo) {
 		studentList.set(studentList.indexOf(oldInfo), newInfo);
 	}
 	
 	// removes Student from ArrayList
-	public void RemoveStudent(Student s) {
+	public void removeStudent(Student s) {
 		studentList.remove(s);
 	}
 	
 	// returns length of ArrayList
-	public int RosterLength() {
+	public int rosterLength() {
 		return studentList.size();
+	}
+	
+	// returns String array of student names
+	public String[] nameList() {
+		String[] names = new String[rosterLength()+1];
+		
+		names[0] = "Add New Student";
+		
+		for (int i = 1; i < rosterLength(); i++) {
+			names[i] = studentList.get(i).getFullName();
+		}
+		
+		return names;
 	}
 
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,13 +22,11 @@ public class RosterView {
 
 	// declares components
 	private Container c;
-
-	private DefaultListModel<String> studentList;
-	private JList<String> rosterList;
-	private JScrollPane rosterScroller;
+	private Roster r;
 
 	private JPanel rosterPanel;
-
+	private JComboBox<String> rosterCombo;
+	
 	private JButton addStudent;
 	private AddListener objAddListner;
 
@@ -41,6 +40,7 @@ public class RosterView {
 	private JTextField firstNameField;
 	private JLabel lastNameLabel;
 	private JTextField lastNameField;
+	
 	private JPanel basicInfoPanel;
 	private JLabel genderLabel;
 	private ButtonGroup genderButtons;
@@ -90,38 +90,24 @@ public class RosterView {
 	private CancelListener objCancelListener;
 
 	// constructor takes Container and sets it to Roster View
-	public RosterView(Container c) {
+	public RosterView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
 		this.c.removeAll();
-
-		// creates jlist object to show roster contents
-		studentList = new DefaultListModel<String>();
-
-		// adds dummy items to list for display testing
-		for (int i = 0; i < 11; i++) {
-			studentList.addElement("Matt Showman");
-			studentList.addElement("Nate Lewis");
-		}
-
-		// creates jlist to store roster list
-		// limits selection to one student at a time
-		rosterList = new JList<String>(studentList);
-		rosterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		rosterList.setLayoutOrientation(JList.VERTICAL);
-
-		// creates scrollbar for jlist object
-		rosterScroller = new JScrollPane(rosterList);
-		rosterScroller.setPreferredSize(new Dimension(200, 400));
-		rosterScroller.setAlignmentX(JScrollPane.RIGHT_ALIGNMENT);
-		rosterScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		rosterScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		rosterScroller.getVerticalScrollBar().setUnitIncrement(10);
+		
+		// sets object's roster to roster that was passed
+		this.r = r;
 
 		// creates panel to hold roster list
 		rosterPanel = new JPanel(new BorderLayout());
 		rosterPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
 
+		// creates dropdown for roster list
+		rosterCombo = new JComboBox(r.nameList());
+		
+		// add combobox to panel
+		rosterPanel.add(rosterCombo);
+		
 		// creates add and delete buttons
 		// sets Action Listeners for buttons
 		addStudent = new JButton("+");
@@ -135,10 +121,6 @@ public class RosterView {
 		rosterButtons = new JPanel();
 		rosterButtons.add(addStudent);
 		rosterButtons.add(removeStudent);
-
-		// adds buttons, scrollbar (and attached jlist) to panel
-		rosterPanel.add(rosterScroller, BorderLayout.CENTER);
-		rosterPanel.add(rosterButtons, BorderLayout.PAGE_END);
 
 		// creates panel to hold form fields
 		formPanel = new JPanel(new GridLayout(7, 2));
@@ -352,7 +334,6 @@ public class RosterView {
 		if (enabled == true)
 			firstNameField.requestFocusInWindow();
 
-		rosterList.setEnabled(!enabled);
 		addStudent.setEnabled(!enabled);
 	}
 
@@ -365,7 +346,6 @@ public class RosterView {
 		elaButtons.clearSelection();
 		scienceButtons.clearSelection();
 		ssButtons.clearSelection();
-		rosterList.clearSelection();
 	}
 
 	// calls toggleFormEnabled, passing true to enable form fields

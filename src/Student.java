@@ -53,7 +53,7 @@ public class Student {
 			this.lastName = lName;
 			this.gender = gender;
 			this.age = age;
-			this.fullName = fName + "" + lName;
+			this.fullName = fName + " " + lName;
 		}
 		public void setGrades(char[] grades){
 			for (int i = 0; i < grades.length; i++) {

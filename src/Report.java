@@ -21,7 +21,7 @@ public class Report {
 	
 	// loops through roster, writes anecdotal for each subject to output file
 	public void RunReport() {
-		for (int i = 0; i < studentList.RosterLength(); i++) {
+		for (int i = 0; i < studentList.rosterLength(); i++) {
 			for (Subject subject : classList) {
 				
 			}

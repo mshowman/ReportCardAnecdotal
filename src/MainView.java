@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 public class MainView extends JFrame {
 	// declare variables
+	private Roster r;
 	private Container c;
 	private JMenuBar navBar;
 	private JMenuItem rosterMenu;
@@ -21,8 +22,11 @@ public class MainView extends JFrame {
 	// default constructor
 	// sets up frame and container
 	// default view is RosterView
-	public MainView() {
+	public MainView(Roster r) {
 
+		// sets roster to created roster
+		this.r = r;
+		
 		// sets container to contentpane
 		c = getContentPane();
 
@@ -45,7 +49,7 @@ public class MainView extends JFrame {
 		setJMenuBar(navBar);
 		
 		// sets container to roster view by default
-		rosterView = new RosterView(c);
+		rosterView = new RosterView(c,r);
 		c = rosterView.getRosterContainer();
 
 		// set attributes of frame
@@ -62,7 +66,7 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			rosterView = new RosterView(c);
+			rosterView = new RosterView(c,r);
 			c = rosterView.getRosterContainer();
 			
 			c.validate();
