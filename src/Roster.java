@@ -18,7 +18,7 @@ public class Roster {
 		studentList = new ArrayList<Student>();
 	}
 
-	// constructor if array of student objects is passed, adds each element to
+	// constructor if roster is passed, adds each element to
 	// ArrayList
 	public Roster(Roster list) {
 		studentList = new ArrayList<Student>();
@@ -53,7 +53,8 @@ public class Roster {
 		return studentList.get(index);
 	}
 
-	// returns String array of student names
+	// returns String array of student names for combobox list
+	// pulls full name for each student
 	public String[] nameList() {
 		String[] names = new String[rosterLength()];
 

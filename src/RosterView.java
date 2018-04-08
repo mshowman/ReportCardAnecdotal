@@ -111,14 +111,14 @@ public class RosterView {
 		// creates panel to hold form fields
 		formPanel = new JPanel(new GridLayout(9, 2));
 
-		// creates panel to hold label and textfield for name
+		// creates panel to hold label and textfield for first and last name
 		GridLayout layout = new GridLayout(2, 2);
 		layout.setVgap(10);
 
 		namePanel = new JPanel(layout);
 		namePanel.setBorder(new EmptyBorder(0, 20, 0, 20));
 
-		// creates label and textfield for name
+		// creates label and textfield for first and last name
 		firstNameLabel = new JLabel("Student's First Name:");
 		firstNameField = new JTextField();
 
@@ -365,6 +365,7 @@ public class RosterView {
 		scienceMRadio.setSelected(true);
 		ssMRadio.setSelected(true);
 
+		// inverts enabled from form items, if they are enabled, it isn't and vice-versa
 		rosterCombo.setEnabled(!enabled);
 
 		firstNameField.setEnabled(enabled);
@@ -376,15 +377,19 @@ public class RosterView {
 		genPRadio.setEnabled(enabled);
 		genMRadio.setEnabled(enabled);
 		genERadio.setEnabled(enabled);
+
 		mathPRadio.setEnabled(enabled);
 		mathMRadio.setEnabled(enabled);
 		mathERadio.setEnabled(enabled);
+
 		elaPRadio.setEnabled(enabled);
 		elaMRadio.setEnabled(enabled);
 		elaERadio.setEnabled(enabled);
+
 		sciencePRadio.setEnabled(enabled);
 		scienceMRadio.setEnabled(enabled);
 		scienceERadio.setEnabled(enabled);
+
 		ssPRadio.setEnabled(enabled);
 		ssMRadio.setEnabled(enabled);
 		ssERadio.setEnabled(enabled);
@@ -399,35 +404,48 @@ public class RosterView {
 
 	// clears the form fields and rosterlist's selection
 	public void clearComponents() {
+		// clear text fields
 		firstNameField.setText("");
 		lastNameField.setText("");
+
+		// clear selections for radio buttons
 		genderButtons.clearSelection();
 		generalButtons.clearSelection();
 		mathButtons.clearSelection();
 		elaButtons.clearSelection();
 		scienceButtons.clearSelection();
 		ssButtons.clearSelection();
+
+		// clears combobox selection
 		rosterCombo.setSelectedIndex(-1);
+
+		// resets save button text
 		saveButton.setText("Save Student");
+
+		// hides delete button
 		deleteButton.setVisible(false);
 	}
 
+	// sets form items based on student info
 	public void setComponents(Student s) {
+		// set text fields
 		firstNameField.setText(s.getFirstName());
 		lastNameField.setText(s.getLastName());
 
+		// set gender radio button
 		switch (s.getGender()) {
 		case 'M':
 			maleRadio.setSelected(true);
 			break;
-
 		default:
 			femaleRadio.setSelected(true);
 			break;
 		}
 
+		// sets grade radio buttons
 		char[] grades = s.getGrades();
 
+		// general grade
 		switch (grades[0]) {
 		case 'P':
 			genPRadio.setSelected(true);
@@ -442,6 +460,7 @@ public class RosterView {
 			break;
 		}
 
+		// math grade
 		switch (grades[1]) {
 		case 'P':
 			mathPRadio.setSelected(true);
@@ -456,6 +475,7 @@ public class RosterView {
 			break;
 		}
 
+		// ela grade
 		switch (grades[2]) {
 		case 'P':
 			elaPRadio.setSelected(true);
@@ -470,6 +490,7 @@ public class RosterView {
 			break;
 		}
 
+		// science grade
 		switch (grades[3]) {
 		case 'P':
 			sciencePRadio.setSelected(true);
@@ -484,6 +505,7 @@ public class RosterView {
 			break;
 		}
 
+		// social studies grade
 		switch (grades[4]) {
 		case 'P':
 			ssPRadio.setSelected(true);
@@ -498,7 +520,10 @@ public class RosterView {
 			break;
 		}
 
+		// changes text of save button
 		saveButton.setText("Update Student");
+
+		// unhides delete button
 		deleteButton.setVisible(true);
 
 	}
@@ -507,6 +532,7 @@ public class RosterView {
 	public String checkForCompleteForm() {
 		String errorMsg = "";
 
+		// checks text fields
 		if (firstNameField.getText().isEmpty()) {
 			errorMsg += "Please enter a first name.";
 		}
@@ -515,6 +541,7 @@ public class RosterView {
 			errorMsg += "\nPlease enter a last name.";
 		}
 
+		// checks gender radio buttons
 		if (maleRadio.isSelected() == false && femaleRadio.isSelected() == false) {
 			errorMsg += "\nPlease select a gender.";
 		}
@@ -525,11 +552,13 @@ public class RosterView {
 	// calls toggleFormEnabled, passing true to enable form fields
 	private class AddEditStudentListener implements ItemListener {
 
+		// if an item is selected from combobox, enable form
 		public void itemStateChanged(ItemEvent arg0) {
 			if (arg0.getStateChange() == ItemEvent.SELECTED) {
 
 				toggleFormEnabled(true);
 
+				// if student selected, populate fields
 				if (rosterCombo.getSelectedIndex() != 0) {
 					setComponents(r.getStudent(rosterCombo.getSelectedIndex() - 1));
 				}
@@ -541,19 +570,25 @@ public class RosterView {
 	// saves or updates a student
 	private class SaveUpdateListener implements ActionListener {
 
+		// dictionary for index -> char grade
 		private Map<Integer, Character> grade = new HashMap<Integer, Character>();
 
 		public void actionPerformed(ActionEvent arg0) {
 
+			// setting up indices and keys
 			grade.put(0, 'P');
 			grade.put(1, 'M');
 			grade.put(2, 'E');
 
+			// check for errors with form
 			String errorMsg = checkForCompleteForm();
 
+			// if no errors, store values for gender and grades
+			// else, display error message dialog box
 			if (errorMsg == "") {
 
 				char gender;
+
 				if (maleRadio.isSelected()) {
 					gender = 'M';
 				} else {
@@ -566,6 +601,8 @@ public class RosterView {
 						scienceButtons.getSelection().getActionCommand().charAt(0),
 						ssButtons.getSelection().getActionCommand().charAt(0) };
 
+				// if save button -> add new student to roster
+				// if update button -> replace old info with new info
 				if (saveButton.getText() == "Save Student") {
 					r.addStudent(new Student(firstNameField.getText(), lastNameField.getText(), gender, grades));
 
@@ -591,6 +628,7 @@ public class RosterView {
 
 	}
 
+	// updates the list of items in the combobox
 	public void updateComboBox() {
 		rosterCombo.removeAllItems();
 
@@ -615,6 +653,7 @@ public class RosterView {
 		}
 	}
 
+	// creates dialog box to confirm delete -- Yes/No
 	// removes student if yes is chosen
 	private class RemoveListener implements ActionListener {
 
