@@ -20,11 +20,11 @@ public class Roster {
 
 	// constructor if array of student objects is passed, adds each element to
 	// ArrayList
-	public Roster(Student[] list) {
+	public Roster(Roster list) {
 		studentList = new ArrayList<Student>();
 
-		for (Student s : list) {
-			studentList.add(s);
+		for (int i = 0; i < list.rosterLength(); i++) {
+			studentList.add(list.getStudent(i));
 		}
 	}
 
@@ -39,8 +39,8 @@ public class Roster {
 	}
 
 	// removes Student from ArrayList
-	public void removeStudent(Student s) {
-		studentList.remove(s);
+	public void removeStudent(int index) {
+		studentList.remove(studentList.get(index));
 	}
 
 	// returns length of ArrayList
@@ -50,17 +50,15 @@ public class Roster {
 
 	// return Student at given index
 	public Student getStudent(int index) {
-		return studentList.get(index - 1);
+		return studentList.get(index);
 	}
 
 	// returns String array of student names
 	public String[] nameList() {
-		String[] names = new String[rosterLength() + 1];
+		String[] names = new String[rosterLength()];
 
-		names[0] = "Add New Student";
-
-		for (int i = 1; i <= rosterLength(); i++) {
-			names[i] = studentList.get(i - 1).getFullName();
+		for (int i = 0; i < rosterLength(); i++) {
+			names[i] = studentList.get(i).getFullName();
 		}
 
 		return names;

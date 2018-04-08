@@ -3,6 +3,10 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -75,6 +79,7 @@ public class RosterView {
 
 	private JPanel buttonPanel;
 	private JButton saveButton;
+	private SaveUpdateListener objSaveUpdateListener;
 	private JButton cancelButton;
 	private CancelListener objCancelListener;
 	private JButton deleteButton;
@@ -87,7 +92,7 @@ public class RosterView {
 		this.c.removeAll();
 
 		// sets object's roster to roster that was passed
-		this.r = r;
+		this.r = new Roster(r);
 
 		// creates panel to hold roster list
 		rosterPanel = new JPanel(new BorderLayout());
@@ -95,8 +100,10 @@ public class RosterView {
 
 		// creates dropdown for roster list
 		rosterCombo = new JComboBox<String>(r.nameList());
+		rosterCombo.insertItemAt("Add New Student", 0);
+		rosterCombo.setSelectedIndex(-1);
 		objAddEditListner = new AddEditStudentListener();
-		rosterCombo.addActionListener(objAddEditListner);
+		rosterCombo.addItemListener(objAddEditListner);
 
 		// add combobox to panel
 		rosterPanel.add(rosterCombo);
@@ -155,9 +162,15 @@ public class RosterView {
 
 		// creates label and radio buttons
 		generalLabel = new JLabel("General Grade:");
+
 		genPRadio = new JRadioButton("P");
+		genPRadio.setActionCommand("P");
+
 		genMRadio = new JRadioButton("M");
+		genMRadio.setActionCommand("M");
+
 		genERadio = new JRadioButton("E");
+		genERadio.setActionCommand("E");
 
 		// adds radio buttons to group to limit selection to one option
 		generalButtons = new ButtonGroup();
@@ -180,9 +193,15 @@ public class RosterView {
 
 		// creates label and radio buttons
 		mathLabel = new JLabel("Math Grade:");
+
 		mathPRadio = new JRadioButton("P");
+		mathPRadio.setActionCommand("P");
+
 		mathMRadio = new JRadioButton("M");
+		mathMRadio.setActionCommand("M");
+
 		mathERadio = new JRadioButton("E");
+		mathERadio.setActionCommand("E");
 
 		// adds radio buttons to group to limit selection to one option
 		mathButtons = new ButtonGroup();
@@ -205,9 +224,15 @@ public class RosterView {
 
 		// creates label and radio buttons
 		elaLabel = new JLabel("ELA Grade:");
+
 		elaPRadio = new JRadioButton("P");
+		elaPRadio.setActionCommand("P");
+
 		elaMRadio = new JRadioButton("M");
+		elaMRadio.setActionCommand("M");
+
 		elaERadio = new JRadioButton("E");
+		elaERadio.setActionCommand("E");
 
 		// adds radio buttons to group to limit selection to one option
 		elaButtons = new ButtonGroup();
@@ -230,9 +255,15 @@ public class RosterView {
 
 		// creates label and radio buttons
 		scienceLabel = new JLabel("Science Grade:");
+
 		sciencePRadio = new JRadioButton("P");
+		sciencePRadio.setActionCommand("P");
+
 		scienceMRadio = new JRadioButton("M");
+		scienceMRadio.setActionCommand("M");
+
 		scienceERadio = new JRadioButton("E");
+		scienceERadio.setActionCommand("E");
 
 		// adds radio buttons to group to limit selection to one option
 		scienceButtons = new ButtonGroup();
@@ -255,9 +286,15 @@ public class RosterView {
 
 		// creates label and radio buttons
 		ssLabel = new JLabel("Social Studies Grade:");
+
 		ssPRadio = new JRadioButton("P");
+		ssPRadio.setActionCommand("P");
+
 		ssMRadio = new JRadioButton("M");
+		ssMRadio.setActionCommand("M");
+
 		ssERadio = new JRadioButton("E");
+		ssERadio.setActionCommand("E");
 
 		// adds radio buttons to group to limit selection to one option
 		ssButtons = new ButtonGroup();
@@ -281,6 +318,8 @@ public class RosterView {
 		// creates buttons for save, cancel, and delete
 		// sets Action Listener for buttons
 		saveButton = new JButton("Save Student");
+		objSaveUpdateListener = new SaveUpdateListener();
+		saveButton.addActionListener(objSaveUpdateListener);
 
 		cancelButton = new JButton("Cancel");
 		objCancelListener = new CancelListener();
@@ -368,7 +407,7 @@ public class RosterView {
 		elaButtons.clearSelection();
 		scienceButtons.clearSelection();
 		ssButtons.clearSelection();
-		rosterCombo.setSelectedIndex(0);
+		rosterCombo.setSelectedIndex(-1);
 		saveButton.setText("Save Student");
 		deleteButton.setVisible(false);
 	}
@@ -464,17 +503,106 @@ public class RosterView {
 
 	}
 
+	// checks to make sure all form items are complete
+	public String checkForCompleteForm() {
+		String errorMsg = "";
+
+		if (firstNameField.getText().isEmpty()) {
+			errorMsg += "Please enter a first name.";
+		}
+
+		if (lastNameField.getText().isEmpty()) {
+			errorMsg += "\nPlease enter a last name.";
+		}
+
+		if (maleRadio.isSelected() == false && femaleRadio.isSelected() == false) {
+			errorMsg += "\nPlease select a gender.";
+		}
+
+		return errorMsg;
+	}
+
 	// calls toggleFormEnabled, passing true to enable form fields
-	private class AddEditStudentListener implements ActionListener {
+	private class AddEditStudentListener implements ItemListener {
 
-		public void actionPerformed(ActionEvent arg0) {
-			toggleFormEnabled(true);
+		public void itemStateChanged(ItemEvent arg0) {
+			if (arg0.getStateChange() == ItemEvent.SELECTED) {
 
-			if (rosterCombo.getSelectedIndex() != 0) {
-				setComponents(r.getStudent(rosterCombo.getSelectedIndex()));
+				toggleFormEnabled(true);
+
+				if (rosterCombo.getSelectedIndex() != 0) {
+					setComponents(r.getStudent(rosterCombo.getSelectedIndex() - 1));
+				}
 			}
 		}
 
+	}
+
+	// saves or updates a student
+	private class SaveUpdateListener implements ActionListener {
+
+		private Map<Integer, Character> grade = new HashMap<Integer, Character>();
+
+		public void actionPerformed(ActionEvent arg0) {
+
+			grade.put(0, 'P');
+			grade.put(1, 'M');
+			grade.put(2, 'E');
+
+			String errorMsg = checkForCompleteForm();
+
+			if (errorMsg == "") {
+
+				char gender;
+				if (maleRadio.isSelected()) {
+					gender = 'M';
+				} else {
+					gender = 'F';
+				}
+
+				char[] grades = { generalButtons.getSelection().getActionCommand().charAt(0),
+						mathButtons.getSelection().getActionCommand().charAt(0),
+						elaButtons.getSelection().getActionCommand().charAt(0),
+						scienceButtons.getSelection().getActionCommand().charAt(0),
+						ssButtons.getSelection().getActionCommand().charAt(0) };
+
+				if (saveButton.getText() == "Save Student") {
+					r.addStudent(new Student(firstNameField.getText(), lastNameField.getText(), gender, grades));
+
+					updateComboBox();
+
+					clearComponents();
+					toggleFormEnabled(false);
+
+				} else if (saveButton.getText() == "Update Student") {
+					r.editStudent(r.getStudent(rosterCombo.getSelectedIndex() - 1),
+							new Student(firstNameField.getText(), lastNameField.getText(), gender, grades));
+
+					updateComboBox();
+
+					clearComponents();
+					toggleFormEnabled(false);
+
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, errorMsg);
+			}
+		}
+
+	}
+
+	public void updateComboBox() {
+		rosterCombo.removeAllItems();
+
+		if (r.rosterLength() > 0) {
+			String[] names = r.nameList();
+
+			for (String string : names) {
+				rosterCombo.addItem(string);
+			}
+		}
+
+		rosterCombo.insertItemAt("Add New Student", 0);
 	}
 
 	// calls clearComponents and toggleFormEnabled, passing false to disable form
@@ -497,21 +625,14 @@ public class RosterView {
 					"Removing Student", dialogButton);
 
 			if (dialogResult == 0) {
-				
-				System.out.println(r.getStudent(rosterCombo.getSelectedIndex()).getFullName());
 
-				r.removeStudent(r.getStudent(rosterCombo.getSelectedIndex()));
+				r.removeStudent(rosterCombo.getSelectedIndex() - 1);
 
-				rosterCombo.removeAllItems();
-
-				String[] names = r.nameList();
-
-				for (String string : names) {
-					rosterCombo.addItem(string);
-				}
+				updateComboBox();
 
 				clearComponents();
 				toggleFormEnabled(false);
+
 			}
 		}
 	}
