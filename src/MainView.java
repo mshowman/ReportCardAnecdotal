@@ -59,6 +59,7 @@ public class MainView extends JFrame {
 
 		// show frame
 		setVisible(true);
+		setLocationRelativeTo(null);
 	}
 
 	// listens for Roster menuitem to be clicked
