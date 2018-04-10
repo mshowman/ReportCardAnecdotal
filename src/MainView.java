@@ -79,7 +79,7 @@ public class MainView extends JFrame {
 	private class ReportMenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
-			reportView = new ReportView(c);
+			reportView = new ReportView(c, r);
 			c = reportView.getReportContainer();
 
 			c.validate();

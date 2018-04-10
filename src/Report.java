@@ -28,4 +28,16 @@ public class Report {
 		}
 	}
 
+	public static String getMathWriteup(Student s) {
+		char grade = s.getGrades()[1];
+		
+		switch (grade) {
+		case 'P':
+			return 
+			break;
+
+		default:
+			break;
+		}
+	}
 }
