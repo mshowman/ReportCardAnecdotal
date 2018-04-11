@@ -28,7 +28,7 @@ public class Report {
 		}
 	}
 
-	public static String getMathWriteup(Student s) {
+	/*public static String getMathWriteup(Student s) {
 		char grade = s.getGrades()[1];
 		
 		switch (grade) {
@@ -40,4 +40,20 @@ public class Report {
 			break;
 		}
 	}
+	
+	public static String getELAWriteup(Student s) {
+		char grade = s.getGrades()[1];
+		
+		switch (grade) {
+		case 'P':
+			return 
+			break;
+
+		default:
+			break;
+		}
+		*/
+	
+	
+	
 }
