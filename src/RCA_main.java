@@ -7,9 +7,10 @@
 public class RCA_main {
 
 	private static MainView mv;
-
+	public static Roster roster;
+	
 	public static void main(String[] args) {
-		Roster roster = new Roster();
+		roster = new Roster();
 
 		mv = new MainView(roster);
 	}

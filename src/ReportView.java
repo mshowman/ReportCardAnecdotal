@@ -35,7 +35,7 @@ public class ReportView {
 		this.c = c;
 		this.c.removeAll();
 
-		this.r = r;
+//		this.r = r;
 
 		// creates panel to hold unpicked and picked student lists
 		studentPanel = new JPanel(new GridLayout(r.rosterLength(), 1));
