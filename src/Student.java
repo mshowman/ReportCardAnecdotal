@@ -59,4 +59,11 @@ public class Student {
 		}
 	}
 
+	public String toString() {
+		char[] grades = getGrades();
+		
+		return getFirstName() + ";" + getLastName() + ";" + getGender() + ";" + grades[0]
+				+ ";" + grades[1] + ";" + grades[2] + ";" + grades[3] + ";" + grades[4];
+	}
+
 }

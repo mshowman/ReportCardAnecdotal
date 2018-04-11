@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 
 public class MainView extends JFrame {
 	// declare variables
-	private Roster r;
+	public Roster r;
 	private Container c;
 	private JMenuBar navBar;
 	private JMenuItem rosterMenu;
