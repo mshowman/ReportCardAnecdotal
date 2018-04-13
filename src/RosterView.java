@@ -355,6 +355,11 @@ public class RosterView {
 		return this.c;
 	}
 
+	// returns new object with passed roster and container
+	public static RosterView getRosterView(Container c, Roster r){
+		return new RosterView(c,r);
+	}
+
 	// enables or disables form fields
 	public void toggleFormEnabled(boolean enabled) {
 
