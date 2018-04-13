@@ -67,7 +67,7 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			rosterView = new RosterView(c, r);
+			rosterView = RosterView.getRosterView(c, r);
 			c = rosterView.getRosterContainer();
 
 			c.validate();
@@ -79,7 +79,7 @@ public class MainView extends JFrame {
 	private class ReportMenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
-			reportView = new ReportView(c, r);
+			reportView = ReportView.getReportView(c, r);
 			c = reportView.getReportContainer();
 
 			c.validate();
