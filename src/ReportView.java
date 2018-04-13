@@ -104,6 +104,11 @@ public class ReportView {
 		this.c.repaint();
 	}
 
+	// returns new object with passed roster and container
+	public static ReportView getReportView(Container c, Roster r){
+		return new ReportView(c,r);
+	}
+
 	// returns the container of this object
 	public Container getReportContainer() {
 		return this.c;
