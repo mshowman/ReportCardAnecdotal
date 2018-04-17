@@ -50,7 +50,7 @@ public class MainView extends JFrame {
 
 		// sets container to roster view by default
 		rosterView = new RosterView(c, r);
-		c = rosterView.getRosterContainer();
+		c = rosterView.createRosterView(r);
 
 		// set attributes of frame
 		setTitle("Report Card Anecdotals");
@@ -67,8 +67,7 @@ public class MainView extends JFrame {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			rosterView = RosterView.getRosterView(c, r);
-			c = rosterView.getRosterContainer();
+			c = rosterView.createRosterView(r);
 
 			c.validate();
 			c.repaint();

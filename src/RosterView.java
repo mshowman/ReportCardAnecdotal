@@ -89,17 +89,20 @@ public class RosterView {
 	public RosterView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
-		this.c.removeAll();
+		this.c = createRosterView(r);
+	}
 
-		// sets object's roster to roster that was passed
-		this.r = new Roster(r);
+	public Container createRosterView(Roster r) {
+
+		this.r = r;
+		this.c.removeAll();
 
 		// creates panel to hold roster list
 		rosterPanel = new JPanel(new BorderLayout());
 		rosterPanel.setBorder(new EmptyBorder(10, 10, 0, 0));
 
 		// creates dropdown for roster list
-		rosterCombo = new JComboBox<String>(r.nameList());
+		rosterCombo = new JComboBox<String>(this.r.nameList());
 		rosterCombo.insertItemAt("Add New Student", 0);
 		rosterCombo.setSelectedIndex(-1);
 		objAddEditListner = new AddEditStudentListener();
@@ -345,19 +348,18 @@ public class RosterView {
 		this.c.add(formPanel, BorderLayout.CENTER);
 		this.c.add(buttonPanel, BorderLayout.PAGE_END);
 
-		// redraws screen
-		this.c.validate();
-		this.c.repaint();
-	}
-
-	// returns the container of this object
-	public Container getRosterContainer() {
 		return this.c;
 	}
 
 	// returns new object with passed roster and container
-	public static RosterView getRosterView(Container c, Roster r){
-		return new RosterView(c,r);
+	public Container getRosterView() {
+		Container tempC = createRosterView(getRoster());
+
+		return tempC;
+	}
+
+	public Roster getRoster() {
+		return this.r;
 	}
 
 	// enables or disables form fields
