@@ -1,13 +1,13 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Subject {
 
 	// private final Map<Integer, String> classs.getName()s = new HashMap<Integer,
 	// String>();
-	private int index;
 	// private String classs.getName();
 	// private ArrayList<String> anecdotals = new ArrayList<String>();
-	private String P1, P2, P3, P4;
-
 	// public Subject(int classIndex) {
 	// classs.getName()s.put(0, "General");
 	// classs.getName()s.put(1, "Math");
@@ -24,7 +24,15 @@ public class Subject {
 	// }
 	//
 
-	public String getAnecdotal(Student s) {
+	private int index;
+	private String P1 = "";
+	private String P2 = "";
+	private String P3 = "";
+	private String P4 = "";
+
+	public String getAnecdotal(Student s, int whichSubject) {
+
+		index = whichSubject;
 
 		// Get the gender for populating the pronouns in the anecdotes
 		switch (s.getGender()) {
@@ -33,18 +41,20 @@ public class Subject {
 			P2 = "her";
 			P3 = "her";
 			P4 = "she";
-			break;
 
+			break;
 		case 'F':
 			P1 = "He";
 			P2 = "his";
 			P3 = "him";
 			P4 = "he";
+
 			break;
 		}
 
 		// Find the correct anecdote for the request
 		switch (index) {
+
 		case 0: // General Grade Anecdote
 			switch (s.getGrades()[index]) {
 			case 'P':
@@ -61,6 +71,7 @@ public class Subject {
 						+ " is always a great support to the peers around " + P3
 						+ ". We can\'t wait to see all of the great things " + P4
 						+ " does during the last part of the year together.";
+
 			case 'E':
 				return s.getFirstName() + "\n\n" + s.getFirstName() + " is a pleasure to have in class. " + P1
 						+ " consistently follows the morning routine without requiring teacher support or reminders. "
@@ -195,39 +206,45 @@ public class Subject {
 						+ s.getFirstName()
 						+ " has worked through the writing process using rubrics and checklists to enable self reflection and editing skills.";
 			}
+
+		case 3: // ELA Writing Grade Anecdote
+			switch (s.getGrades()[index]) {
+			case 'P':
+
+			case 'M':
+
+			case 'E':
+
+			}
+
+		case 4: // Science Grade Anecdote
+			switch (s.getGrades()[index]) {
+			default:
+				return "\n\nScience\n\nOur first science unit focused on \"Energy and Electricity\". Through hands-on experiences, "
+						+ s.getFirstName()
+						+ " explored the concepts of kinetic and potential energy, sources of energy in terms of electricity, and how simple circuits function. "
+						+ s.getFirstName()
+						+ " engaged in these \"experiments\" head on, happily problem solving any issues and creating new variations when appropriate. "
+						+ "Our culminating project was to create an electric car able to travel a certain distance, pull an object of a certain weight, and jump "
+						+ "a specific distance. While as a class, we did not find much success with any of these goals, let alone getting our cars to move, "
+						+ s.getFirstName() + " refused to give up. " + P1
+						+ " exhausted every possible idea before finally \"throwing in the white towel\".\n\nOur "
+						+ "second science unit is \"Rocks and Minerals\", something that " + s.getFirstName()
+						+ " is very excited to begin. We began our study by "
+						+ "looking at the process of weathering (wearing down rocks through constant interaction with wind, water, and ice). The "
+						+ "students were assigned to a team and asked to develop an experiment to observe the process, while including their own "
+						+ "purpose (which one weathered faster, would different liquids affect the process, etc.). Through this process, "
+						+ s.getFirstName()
+						+ " worked through the scientific method with minimal support from the teacher. "
+						+ s.getFirstName() + " and " + P2
+						+ " group worked together to develop and document their plans, revise and edit those plans based on reflection, "
+						+ "new information, or limitations, and finally run their experiment. I look forward to seeing what new and exciting things "
+						+ P4 + " comes up with as we continue in our study of \"Rocks and Minerals\".";
+			}
+
 		default:
-			return "Something went wrong.";
-
-		// case 3: //Science Grade Anecdote
-		// switch(s.getGrades()[index]){
-		// case 'P':
-		// break;
-		// case 'M':
-		// case 'E':
-		// break;
-		// }
-		//
-		// case 4:
-		// switch(s.getGrades()[index]){
-		// case 'P':
-		//
-		// case 'M':
-		//
-		// case 'E':
-
+			return "Please try again";
 		}
+
 	}
 }
-
-// public void getAnecdotal(Student s) {
-// switch (s.getGrades()[index]) {
-// case 'P':
-// break;
-//
-// case 'M':
-// break;
-//
-// case 'E':
-// break;
-// }
-// }
