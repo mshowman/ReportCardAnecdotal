@@ -35,14 +35,14 @@ public class ReportView {
 		this.c = c;
 		this.c.removeAll();
 
-//		this.r = r;
+		this.r = r;
 
 		// creates panel to hold unpicked and picked student lists
 		studentPanel = new JPanel(new GridLayout(r.rosterLength(), 1));
 		studentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
+
 		String[] names = r.nameList();
-		
+
 		for (String string : names) {
 			studentPanel.add(new JCheckBox(string));
 		}
@@ -57,11 +57,22 @@ public class ReportView {
 
 		// adds checkboxes
 		allSubject = new JCheckBox("All Subjects");
+		allSubject.setActionCommand("All");
+
 		generalSubject = new JCheckBox("General");
+		generalSubject.setActionCommand("General");
+
 		mathSubject = new JCheckBox("Math");
+		mathSubject.setActionCommand("Math");
+
 		elaSubject = new JCheckBox("ELA");
+		elaSubject.setActionCommand("ELA");
+
 		scienceSubject = new JCheckBox("Science");
+		scienceSubject.setActionCommand("Science");
+
 		ssSubject = new JCheckBox("Social Studies");
+		ssSubject.setActionCommand("Social Studies");
 
 		// create panel and add checkboxes to it
 		subjectPanel = new JPanel(new BorderLayout());
@@ -105,8 +116,8 @@ public class ReportView {
 	}
 
 	// returns new object with passed roster and container
-	public static ReportView getReportView(Container c, Roster r){
-		return new ReportView(c,r);
+	public static ReportView getReportView(Container c, Roster r) {
+		return new ReportView(c, r);
 	}
 
 	// returns the container of this object
