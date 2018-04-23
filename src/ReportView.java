@@ -33,17 +33,15 @@ public class ReportView {
 	public ReportView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
-		this.c.removeAll();
-
 		this.r = r;
-
-		// redraws screen
-		this.c.validate();
-		this.c.repaint();
 	}
 
 	// returns container with populated with items
-	public Container getContainer(){
+	public Container createReportView(){
+
+		this.c.removeAll();
+		this.r = r;
+
 		// creates panel to hold unpicked and picked student lists
 		studentPanel = new JPanel(new GridLayout(r.rosterLength(), 1));
 		studentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -116,6 +114,10 @@ public class ReportView {
 		// add rosterPanel and formPanel to layout panel
 		this.c.add(checkboxScroller, BorderLayout.CENTER);
 		this.c.add(subjectPanel, BorderLayout.LINE_END);
+
+		// redraws screen
+		this.c.validate();
+		this.c.repaint();
 	}
 
 	// returns new object with passed roster and container
