@@ -33,11 +33,11 @@ public class ReportView {
 	public ReportView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
-		this.r = r;
+		this.c = createReportView(r);
 	}
 
 	// returns container with populated with items
-	public Container createReportView(){
+	public Container createReportView(Roster r){
 
 		this.c.removeAll();
 		this.r = r;
