@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class MainView extends JFrame {
 	// declare variables
@@ -14,7 +15,6 @@ public class MainView extends JFrame {
 	private JMenuItem rosterMenu;
 	private RosterMenuListener objRosterMenuListener;
 	private JMenuItem reportMenu;
-	private RosterMenuListener objRMenuListener;
 	private ReportMenuListener objReportMenuListener;
 	private RosterView rosterView;
 	private ReportView reportView;
@@ -48,9 +48,11 @@ public class MainView extends JFrame {
 		// sets menubar of frame to navbar
 		setJMenuBar(navBar);
 
+		// create reportview object
+		reportView = new ReportView(c, r);
+
 		// sets container to roster view by default
 		rosterView = new RosterView(c, r);
-		c = rosterView.createRosterView(r);
 
 		// set attributes of frame
 		setTitle("Report Card Anecdotals");
@@ -62,15 +64,23 @@ public class MainView extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
+	public void setContainer(Container c) {
+		this.c = c;
+
+		c.validate();
+		c.repaint();
+	}
+
+	public Roster getRoster() {
+		return r;
+	}
+
 	// listens for Roster menuitem to be clicked
 	private class RosterMenuListener implements ActionListener {
 
 		// switches container contents to Roster View
 		public void actionPerformed(ActionEvent arg0) {
-			c = rosterView.createRosterView(r);
-
-			c.validate();
-			c.repaint();
+			setContainer(rosterView.createRosterView(r));
 		}
 	}
 
@@ -78,11 +88,12 @@ public class MainView extends JFrame {
 	private class ReportMenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
-			reportView = ReportView.getReportView(c, r);
-			c = reportView.getReportContainer();
-
-			c.validate();
-			c.repaint();
+			if (r.rosterLength() > 0) {
+				setContainer(reportView.createReportView(r));
+			} else {
+				JOptionPane.showMessageDialog(null, "Cannot run a report without students in the roster.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 }

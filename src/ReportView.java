@@ -37,7 +37,7 @@ public class ReportView {
 	}
 
 	// returns container with populated with items
-	public Container createReportView(Roster r){
+	public Container createReportView(Roster r) {
 
 		this.c.removeAll();
 		this.r = r;
@@ -115,80 +115,38 @@ public class ReportView {
 		this.c.add(checkboxScroller, BorderLayout.CENTER);
 		this.c.add(subjectPanel, BorderLayout.LINE_END);
 
-		// redraws screen
-		this.c.validate();
-		this.c.repaint();
-	}
-
-	// returns new object with passed roster and container
-	public static ReportView getReportView(Container c, Roster r) {
-		return new ReportView(c, r);
-	}
-
-	// returns the container of this object
-	public Container getReportContainer() {
 		return this.c;
 	}
 
-	// // enables or disables form fields
-	// public void toggleFormEnabled(boolean enabled) {
-	//
-	// nameField.setEnabled(enabled);
-	//
-	// genPRadio.setEnabled(enabled);
-	// genMRadio.setEnabled(enabled);
-	// genERadio.setEnabled(enabled);
-	// mathPRadio.setEnabled(enabled);
-	// mathMRadio.setEnabled(enabled);
-	// mathERadio.setEnabled(enabled);
-	// elaPRadio.setEnabled(enabled);
-	// elaMRadio.setEnabled(enabled);
-	// elaERadio.setEnabled(enabled);
-	// sciencePRadio.setEnabled(enabled);
-	// scienceMRadio.setEnabled(enabled);
-	// scienceERadio.setEnabled(enabled);
-	// ssPRadio.setEnabled(enabled);
-	// ssMRadio.setEnabled(enabled);
-	// ssERadio.setEnabled(enabled);
-	//
-	// saveButton.setEnabled(enabled);
-	// cancelButton.setEnabled(enabled);
-	//
-	// if (enabled == true)
-	// nameField.requestFocusInWindow();
-	//
-	// rosterList.setEnabled(!enabled);
-	// addStudent.setEnabled(!enabled);
-	// }
-	//
-	// // clears the form fields and rosterlist's selection
-	// public void clearComponents() {
-	// nameField.setText("");
-	// generalButtons.clearSelection();
-	// mathButtons.clearSelection();
-	// elaButtons.clearSelection();
-	// scienceButtons.clearSelection();
-	// ssButtons.clearSelection();
-	// rosterList.clearSelection();
-	// }
+	// deselects all checkboxes
+	public void clearComponents() {
 
-	// calls toggleFormEnabled, passing true to enable form fields
-	private class AddListener implements ActionListener {
+		// clears the student checkboxes
+		studentPanel.removeAll();
 
-		public void actionPerformed(ActionEvent arg0) {
-			// toggleFormEnabled(true);
+		String[] names = r.nameList();
+
+		for (String string : names) {
+			studentPanel.add(new JCheckBox(string));
 		}
+		
+		allSubject.setSelected(false);
+		generalSubject.setSelected(false);
+		mathSubject.setSelected(false);
+		elaSubject.setSelected(false);
+		scienceSubject.setSelected(false);
+		ssSubject.setSelected(false);
+		
+		c.validate();
+		c.repaint();
 
 	}
 
-	// calls clearComponents and toggleFormEnabled, passing false to disable form
-	// fields
+	// calls clearComponents
 	private class CancelListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent arg0) {
-			// clearComponents();
-			// toggleFormEnabled(false);
-
+			clearComponents();
 		}
 	}
 }

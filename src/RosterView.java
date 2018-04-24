@@ -351,13 +351,6 @@ public class RosterView {
 		return this.c;
 	}
 
-	// returns new object with passed roster and container
-	public Container getRosterView() {
-		Container tempC = createRosterView(getRoster());
-
-		return tempC;
-	}
-
 	public Roster getRoster() {
 		return this.r;
 	}
