@@ -27,9 +27,13 @@ public class ReportView {
 	private JPanel buttonPanel;
 	private JButton runReportButton;
 	private JButton cancelButton;
+
 	private CancelListener objCancelListener;
+	private RunReportListener objRRListener;
+	private AllSubjectsListener objASListener;
 
 	// constructor takes Container and sets it to Roster View
+
 	public ReportView(Container c, Roster r) {
 		// sets object's container to container that was passed
 		this.c = c;
@@ -63,6 +67,9 @@ public class ReportView {
 		// adds checkboxes
 		allSubject = new JCheckBox("All Subjects");
 		allSubject.setActionCommand("All");
+
+		objASListener = new AllSubjectsListener();
+		allSubject.addActionListener(objASListener);
 
 		generalSubject = new JCheckBox("General");
 		generalSubject.setActionCommand("General");
@@ -99,6 +106,8 @@ public class ReportView {
 		// creates buttons for save and cancel
 		// sets Action Listener for buttons
 		runReportButton = new JButton("Run Report");
+		objRRListener = new RunReportListener();
+		runReportButton.addActionListener(objRRListener);
 
 		cancelButton = new JButton("Cancel");
 		objCancelListener = new CancelListener();
@@ -129,14 +138,23 @@ public class ReportView {
 		for (String string : names) {
 			studentPanel.add(new JCheckBox(string));
 		}
-		
+
+		// deselects all checkboxes
 		allSubject.setSelected(false);
 		generalSubject.setSelected(false);
 		mathSubject.setSelected(false);
 		elaSubject.setSelected(false);
 		scienceSubject.setSelected(false);
 		ssSubject.setSelected(false);
-		
+
+		// makes sure all checkboxes are enabled
+		generalSubject.setEnabled(true);
+		mathSubject.setEnabled(true);
+		elaSubject.setEnabled(true);
+		scienceSubject.setEnabled(true);
+		ssSubject.setEnabled(true);
+
+		// repaint
 		c.validate();
 		c.repaint();
 
@@ -148,5 +166,88 @@ public class ReportView {
 		public void actionPerformed(ActionEvent arg0) {
 			clearComponents();
 		}
+	}
+
+	private class RunReportListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			// temp variables
+			Roster tempRoster = new Roster();
+			String chosen = "";
+			Component[] components = studentPanel.getComponents();
+
+			// loop through the Student checkboxes
+			// if selected, add to temporary roster
+			for (Component component : components) {
+				JCheckBox cb = (JCheckBox) component;
+
+				if (cb.isSelected()) {
+					tempRoster.addStudent(r.getStudent(r.getIndexOfStudent(cb.getText())));
+				}
+			}
+
+			// if all subjects selected, pass all subjects to report
+			// else, go subject by subject to check for selection
+			if (allSubject.isSelected()) {
+				chosen = generalSubject.getText() + ";" + mathSubject.getText() + ";" + elaSubject.getText() + ";"
+						+ scienceSubject.getText() + ";" + ssSubject.getText() + ";";
+			} else {
+				if (generalSubject.isSelected()) {
+					chosen += generalSubject.getText() + ";";
+				}
+
+				if (mathSubject.isSelected()) {
+					chosen += mathSubject.getText() + ";";
+				}
+
+				if (elaSubject.isSelected()) {
+					chosen += elaSubject.getText() + ";";
+				}
+
+				if (scienceSubject.isSelected()) {
+					chosen += scienceSubject.getText() + ";";
+				}
+
+				if (ssSubject.isSelected()) {
+					chosen += ssSubject.getText() + ";";
+				}
+			}
+
+			// makes sure students and subjects are selected
+			// no -> show error msg
+			// yes -> run report
+			if (chosen.equals("") || tempRoster.rosterLength() == 0) {
+				JOptionPane.showMessageDialog(null, "Cannot run a report without students and/or subjects selected.",
+						"Error", JOptionPane.ERROR_MESSAGE);
+			} else {
+				Report rep = new Report(tempRoster);
+				rep.runReport(chosen.split(";"));
+
+				clearComponents();
+			}
+		}
+	}
+
+	// toggles subject selections
+	private class AllSubjectsListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+			boolean enabled = allSubject.isSelected();
+
+			generalSubject.setSelected(enabled);
+			mathSubject.setSelected(enabled);
+			elaSubject.setSelected(enabled);
+			scienceSubject.setSelected(enabled);
+			ssSubject.setSelected(enabled);
+
+			generalSubject.setEnabled(!enabled);
+			mathSubject.setEnabled(!enabled);
+			elaSubject.setEnabled(!enabled);
+			scienceSubject.setEnabled(!enabled);
+			ssSubject.setEnabled(!enabled);
+
+			c.repaint();
+		}
+
 	}
 }

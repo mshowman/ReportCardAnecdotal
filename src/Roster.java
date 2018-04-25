@@ -53,6 +53,18 @@ public class Roster {
 		return studentList.get(index);
 	}
 
+	// return index of student given a full name
+	public int getIndexOfStudent(String name) {
+		for (int i = 0; i < studentList.size(); i++) {
+			if (studentList.get(i).getFullName().equals(name)) {
+				return i;
+			}
+		}
+
+		return -1;
+
+	}
+
 	// returns String array of student names for combobox list
 	// pulls full name for each student
 	public String[] nameList() {
