@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /*
@@ -9,7 +12,7 @@ import java.util.HashMap;
  * 
  */
 
-public class Report extends Student {
+public class Report extends Student{
 
 	// declaration of variables
 	private Roster studentList;
@@ -22,33 +25,40 @@ public class Report extends Student {
 	// (2, "ELA");
 	// (3, "Science");
 	// (4, "Social Studies");
-
+	
+	
 	public Report(Roster r) {
 		this.studentList = r;
-		subjectMap = new HashMap<>();
-		subjectMap.put("General", 0);
-		subjectMap.put("Math", 1);
-		subjectMap.put("ELA", 2);
-		subjectMap.put("Science", 3);
-		subjectMap.put("Social Studies", 4);
-		subjectMap.put("All", 5);
-
+		 subjectMap = new HashMap<>(); 
+		 subjectMap.put("General", 0);
+		 subjectMap.put("Math", 1);
+		 subjectMap.put("ELA", 2);
+		 subjectMap.put("Science", 3);
+		 subjectMap.put("Social Studies", 4);
+		 subjectMap.put("All", 5);
+		 
 	}
 
-	public void runReport(String[] whichSubject) {
+	public void runReport(String[] whichSubject) throws FileNotFoundException {
+		
+		PrintWriter pR = new PrintWriter("Report.txt");
 
 		// loops through roster, writes anecdotal for each subject to output file
 		for (int i = 0; i < studentList.rosterLength(); i++) {
 			Student s = studentList.getStudent(i);
-			// Get the subjects from the hashMap
-			for (String sub : whichSubject) {
-				int subhash = subjectMap.get(sub);
-				output = Subject.getAnecdotal(s, subhash);
-
-				// Test print of the report output
-				System.out.println(output);
+			//print the student section of the report
+			pR.println( s.getFullName() + " : ");
+			
+			//Get the subjects from the hashMap
+			for (String sub: whichSubject) {
+				 int subhash = subjectMap.get(sub);
+				 output = Subject.getAnecdotal(s,subhash);
+				
+				//Test print of the report output
+				 pR.println(output);
+					}		
 			}
-		}
+		pR.close();
 	}
-
+	
 }

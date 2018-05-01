@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -220,7 +221,12 @@ public class ReportView {
 						"Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				Report rep = new Report(tempRoster);
-				rep.runReport(chosen.split(";"));
+				try {
+					rep.runReport(chosen.split(";"));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				clearComponents();
 			}
